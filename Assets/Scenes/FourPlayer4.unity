@@ -129,8 +129,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 473844543}
-  - component: {fileID: 473844542}
   - component: {fileID: 473844541}
+  - component: {fileID: 473844542}
   m_Layer: 0
   m_Name: LastAssemblyPlayer
   m_TagString: Untagged
@@ -169,12 +169,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 473844540}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f89218bb64df5984aa9745337001c3fd, type: 3}
+  m_Script: {fileID: 11500000, guid: f33298e760f863547bcd13264962ce63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isRebel: 0
   position: 0
-  initialGuns: 5
+  assemblyPlayers: 0
+  initialGuns: 0
   electricity: 0
   gas: 0
   pieces: 0

@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class Gun
 {
-    public Gun(int maxCompletion)
-    {
-        Completion = 0;
-        MaxCompletion = maxCompletion;
-    }
-    Gun()
-    {
-
-    }
-
     private int _maxCompletion;
     private int _completion;
     public int Completion

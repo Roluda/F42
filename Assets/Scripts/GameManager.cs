@@ -10,7 +10,7 @@ using ExitGames.Client.Photon;
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public static GameManager Instance;
-    public bool isRebel; //In andere Klasse
+    bool isLeaving = false;
 
     void Awake()
     {
@@ -38,7 +38,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
                 props.Add("Position", i+1);
                 PhotonNetwork.PlayerList[i].SetCustomProperties(props); //Synchron auf allen clients
             }
-            //photonView.RPC("GameSetup", RpcTarget.All);
         }
     }
 
@@ -51,13 +50,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    [PunRPC]
-    void GameSetup()
-    {
-        PhotonNetwork.AutomaticallySyncScene = false;
-        SceneManager.LoadScene("FourPlayer"+PhotonNetwork.LocalPlayer.CustomProperties["Position"].ToString());
-    }
-
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
@@ -67,14 +59,18 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         SceneManager.LoadScene(0);
-        GameManager.Instance = null;
-        PhotonNetwork.Destroy(this.gameObject);
+        Instance = null;
+        PhotonNetwork.Destroy(gameObject);
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         //Waiting? Return to Lobby --> Everyone Leave Room!
-        PhotonNetwork.LeaveRoom();
+        if (!isLeaving)
+        {
+            isLeaving = true;
+            PhotonNetwork.LeaveRoom();
+        }
     }
 
     /// <summary>

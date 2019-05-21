@@ -7,24 +7,24 @@ using Photon.Realtime;
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     public static PlayerController Instance;
-    [HideInInspector]
+    [Tooltip("whether the player is a rebel, change in edior only affects offline debug")]
     public bool isRebel;
-    [HideInInspector]
+    [Tooltip("The position of the Player in the Assembly Line, change in editor only affects offline debug")]
     public int position;
+    [Tooltip("the amount of players in the room, change in editor only affects offline debug")]
+    [SerializeField]
+    int assemblyPlayers;
     [SerializeField]
     int initialGuns;
+
     public int electricity;
     public int gas;
     public int pieces;
+
     public List<Gun> workLoad = new List<Gun>();
     public Gun currentGun;
 
     protected const string addGunRpcName = "AddGunToWorkload";
-
-    public virtual void Setup()
-    {
-
-    }
 
     void Awake()
     {
@@ -40,14 +40,24 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 
     void Start()
     {
-        isRebel = (bool)PhotonNetwork.LocalPlayer.CustomProperties["IsRebel"];
-        position = (int)PhotonNetwork.LocalPlayer.CustomProperties["Position"];
+        if (PhotonNetwork.IsConnected) {
+            isRebel = (bool)PhotonNetwork.LocalPlayer.CustomProperties["IsRebel"];
+            position = (int)PhotonNetwork.LocalPlayer.CustomProperties["Position"];
+            assemblyPlayers = PhotonNetwork.PlayerList.Length - 1;
+        }
         for (int i = 0; i < initialGuns; i++)
         {
-            Gun newGun = new Gun(5);
+            Gun newGun = new Gun();
+            newGun.MaxCompletion = assemblyPlayers;
+            newGun.Completion = position - 1;
             workLoad.Add(newGun);
         }
-        Setup();
+        CustomSetup();
+    }
+
+    public virtual void CustomSetup()
+    {
+
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

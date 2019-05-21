@@ -17,7 +17,6 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField]
     TMP_Text connectionText;
 
-    private int idInRoom;
     private bool isConnecting;
     private string gameVersion = "1";
 
@@ -78,12 +77,11 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        idInRoom = PhotonNetwork.CurrentRoom.PlayerCount;
         connectionText.text = "room " + roomID + ": " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + " connected";
         Debug.Log("OnJoinedRoom was called by Launcher");
     }
 
-    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         connectionText.text = "room " + roomID +": "+ PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers +" connected";
         if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
@@ -96,7 +94,7 @@ public class Launcher : MonoBehaviourPunCallbacks
         Debug.Log("PlayerConnected");
     }
 
-    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         connectionText.text = "room " + roomID + ": " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + " connected";
         connectionText.text = PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + " connected";

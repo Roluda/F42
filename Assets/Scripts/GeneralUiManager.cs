@@ -20,12 +20,13 @@ public class GeneralUiManager : MonoBehaviour
 
     void Start()
     {
-        isRebelIndicator.SetActive(PlayerController.Instance.isRebel);
+
     }
 
     //HÄSSLICH AF --> Attriubute+Property+Event implementieren
     void Update()
     {
         workLoadCount.text = PlayerController.Instance.workLoad.Count.ToString();
+        isRebelIndicator.SetActive(PlayerController.Instance.isRebel);
     }
 }
