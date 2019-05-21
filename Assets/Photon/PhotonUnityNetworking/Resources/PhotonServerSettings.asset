@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 
+    AppIdRealtime: 4e832f37-353d-4d54-b157-97f7f4226a54
     AppIdChat: 
     AppIdVoice: 
     AppVersion: 
@@ -25,9 +25,12 @@ MonoBehaviour:
     EnableLobbyStatistics: 0
     NetworkLogging: 1
   StartInOfflineMode: 0
-  PunLogging: 0
+  PunLogging: 2
   EnableSupportLogger: 0
   RunInBackground: 1
-  RpcList: []
+  RpcList:
+  - GameSetup
+  - AddGunToWorkload
+  - RemoveGunFromWorkload
   DisableAutoOpenWizard: 1
   ShowSettings: 0
