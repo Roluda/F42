@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
+public enum ResourceType { electricity, gas, pieces}
 public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
 {
     public static PlayerController Instance;
@@ -15,16 +16,79 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField]
     int assemblyPlayers;
     [SerializeField]
-    int initialGuns;
+    int initialGuns = 0;
+    [SerializeField]
+    int resourceCap = 100;
 
-    public int electricity;
-    public int gas;
-    public int pieces;
+    public delegate void ResourceAction(ResourceType rt, int value);
+    public static event ResourceAction OnResourceChange;
+    public delegate void StartAssembleAction();
+    public static event StartAssembleAction OnAssembleStartet;
+    public delegate void FinishAssembleAction();
+    public static event FinishAssembleAction OnAssembleFinished;
+    public delegate void GunReceivedAction(Gun gun);
+    public static event GunReceivedAction OnGunReceived;
+
+    public int Electricity
+    {
+        get
+        {
+            return _electricity;
+        }
+        set
+        {
+            value = Mathf.Clamp(value, 0, resourceCap);
+            if (value != _electricity)
+            {
+                OnResourceChange?.Invoke(ResourceType.electricity, value);
+                _electricity = value;
+            }
+        }
+    }
+    public int Gas
+    {
+        get
+        {
+            return _gas;
+        }
+        set
+        {
+            value = Mathf.Clamp(value, 0, resourceCap);
+            if (value != _gas)
+            {
+                OnResourceChange?.Invoke(ResourceType.gas, value);
+                _gas = value;
+            }
+        }
+    }
+    public int Pieces
+    {
+        get
+        {
+            return _pieces;
+        }
+        set
+        {
+            value = Mathf.Clamp(value, 0, resourceCap);
+            if (value != _pieces)
+            {
+                OnResourceChange?.Invoke(ResourceType.pieces, value);
+                _pieces = value;
+            }
+        }
+    }
 
     public List<Gun> workLoad = new List<Gun>();
     public Gun currentGun;
 
+    protected int _electricity;
+    protected int _gas;
+    protected int _pieces;
+
     protected const string addGunRpcName = "AddGunToWorkload";
+    protected const string addElectricityRpcName = "AddElectricity";
+    protected const string addGasRpcName = "AddGas";
+    protected const string addPiecesRpcName = "AddPieces";
 
     void Awake()
     {
@@ -75,6 +139,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
             Debug.Log("Started Assembling");
             currentGun = workLoad[workLoad.Count-1];
             workLoad.Remove(currentGun);
+            OnAssembleStartet?.Invoke();
         }
         else
         {
@@ -96,10 +161,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
                     Debug.Log("sent Gun to " + player.NickName);
                     photonView.RPC(addGunRpcName, player, (object)currentGun);
                     currentGun = null;
-                }
-                else
-                {
-                    Debug.Log("No next Player was found in order to add workload");
+                    OnAssembleFinished?.Invoke();
                 }
             }
         }
@@ -110,9 +172,26 @@ public class PlayerController : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
+    public void AddElectricity(int value)
+    {
+        Electricity += value;
+    }
+    [PunRPC]
+    public void AddGas(int value)
+    {
+        Gas += value;
+    }
+    [PunRPC]
+    public void AddPieces(int value)
+    {
+        Pieces += value;
+    }
+
+    [PunRPC]
     public void AddGunToWorkload(Gun gun)
     {
         workLoad.Add(gun);
+        OnGunReceived?.Invoke(gun);
         Debug.Log("Added Gun to Workload");
     }
 }

@@ -32,5 +32,11 @@ MonoBehaviour:
   - GameSetup
   - AddGunToWorkload
   - RemoveGunFromWorkload
+  - AddResources
+  - AddElectricity
+  - AddGas
+  - AddPieces
+  - ChangeState
+  - ClearList
   DisableAutoOpenWizard: 1
   ShowSettings: 0

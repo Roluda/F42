@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Gun
 {
-    private int _maxCompletion;
+    private int _maxCompletion = 5;
     private int _completion;
     public int Completion
     {
