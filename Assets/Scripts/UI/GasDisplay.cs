@@ -4,25 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GasDisplay : MonoBehaviour
+public class GasDisplay : ResourceDisplay
 {
-    [SerializeField]
-    TMP_Text display = null;
-
-    void Awake()
-    {
-        PlayerController.OnResourceChange += OnValueChange;
-    }
-    void Start()
-    {
-        display.text = PlayerController.Instance.Gas.ToString();
-    }
-
-    void OnValueChange(ResourceType type, int newValue)
+    protected override void OnValueChanged(ResourceType type, float newValue)
     {
         if (type == ResourceType.gas)
         {
-            display.text = newValue.ToString();
+            CurrentValue = newValue;
         }
     }
 }

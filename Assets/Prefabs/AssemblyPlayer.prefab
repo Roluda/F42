@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1519475213638915728}
   - component: {fileID: 7239097586465208820}
   - component: {fileID: 2856499328758866668}
+  - component: {fileID: 2968546191698477453}
+  - component: {fileID: 8933858139696384109}
   m_Layer: 0
   m_Name: AssemblyPlayer
   m_TagString: Untagged
@@ -51,6 +53,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 2856499328758866668}
+  - {fileID: 2968546191698477453}
+  - {fileID: 8933858139696384109}
   viewIdField: 0
   InstantiationId: 2
   isRuntimeInstantiated: 0
@@ -66,10 +70,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e7981c5eb280c540a9ea8fa213b7beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRebel: 0
-  position: 0
-  assemblyPlayers: 0
-  initialGuns: 5
+  assembleCosts:
+    electricity: 5
+    gas: 5
+    pieces: 5
+--- !u!114 &2968546191698477453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2856499328758866667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ff0d8598cd8578459edfd7fef35a2a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   resourceCap: 100
-  initialResources: {x: 20, y: 20, z: 20}
-  assembleCosts: {x: 1, y: 1, z: 2}
+  initialResources:
+    electricity: 80
+    gas: 80
+    pieces: 80
+  resourceGainOnSupply:
+    electricity: 20
+    gas: 20
+    pieces: 20
+  resupplyInterval: 15
+--- !u!114 &8933858139696384109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2856499328758866667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca638317f1f849c4b819841472bd1ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialGuns: 5

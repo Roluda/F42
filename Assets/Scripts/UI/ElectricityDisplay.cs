@@ -4,26 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ElectricityDisplay : MonoBehaviour
+public class ElectricityDisplay : ResourceDisplay
 {
-    [SerializeField]
-    TMP_Text display = null;
-
-    void Awake()
-    {
-        PlayerController.OnResourceChange += OnValueChange;
-    }
-
-    void Start()
-    {
-        display.text = PlayerController.Instance.Electricity.ToString();
-    }
-
-    void OnValueChange(ResourceType type, int newValue)
+    protected override void OnValueChanged(ResourceType type, float newValue)
     {
         if (type == ResourceType.electricity)
         {
-            display.text = newValue.ToString();
+            CurrentValue = newValue;
         }
     }
 }

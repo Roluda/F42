@@ -38,5 +38,6 @@ MonoBehaviour:
   - AddPieces
   - ChangeState
   - ClearList
+  - RemoveResources
   DisableAutoOpenWizard: 1
   ShowSettings: 0

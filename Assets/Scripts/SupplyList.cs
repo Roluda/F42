@@ -1,18 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using Photon.Realtime;
 using Photon.Pun;
 
 public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
 {
+    public static SupplyList Instance = null;
+    public ListEntry[] listEntries;
+
+    [SerializeField]
+    RectTransform ui_element = null;
+    [SerializeField]
+    RectTransform showPos = null;
+    [SerializeField]
+    RectTransform hidePos = null;
+    [SerializeField]
+    float showSpeed = 200;
+    [SerializeField]
+    float smoothTime = 0.1f;
     [SerializeField]
     RectTransform entryParent = null;
-    public ListEntry[] listEntries;
+    [SerializeField]
+    TMP_Text countdownText = null;
     [SerializeField]
     float spaceBetweenEntries = 50;
     [SerializeField]
     ListEntry entryPrefab = null;
+
+    Vector3 currentVelocity;
+    bool isShowing;
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            DestroyImmediate(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -20,14 +50,26 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
         Setup();
         if (PhotonNetwork.IsConnected)
         {
-            photonView.RPC("ClearList", RpcTarget.All);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("ClearList", RpcTarget.All);
+            }
         }
+        else
+        {
+            ClearList();
+        }
+    }
+
+    void Update()
+    {
+
     }
 
     [PunRPC]
     void ChangeState(int entry, ListEntryState state)
     {
-        if (entry < listEntries.Length)
+        if (entry < listEntries.Length && entry>=0)
         {
             listEntries[entry].State = state;
         }
@@ -53,7 +95,7 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsConnected)
         {
-            listEntries = new ListEntry[PhotonNetwork.PlayerList.Length-1];
+            listEntries = new ListEntry[PhotonNetwork.PlayerList.Length-1]; //One Entry for each player except overseer
             foreach (Player player in PhotonNetwork.PlayerList)
             {
 
@@ -83,8 +125,41 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    public void ShowList()
+    {
+        isShowing = !isShowing;
+        if (isShowing)
+        {
+            Debug.Log("ShowList");
+            StopAllCoroutines();
+            StartCoroutine(MoveTransform(ui_element, showPos));
+        }
+        else
+        {
+            Debug.Log("HideList");
+            StopAllCoroutines();
+            StartCoroutine(MoveTransform(ui_element, hidePos));
+        }
+    }
+
+    public void UpdateCountdown(float time)
+    {
+        System.TimeSpan timeSpan = System.TimeSpan.FromSeconds(time);
+        countdownText.text = "resupply in: " + timeSpan.Seconds;
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
+    }
+
+    IEnumerator MoveTransform(RectTransform rect, RectTransform target)
+    {
+        Vector3 direction = (target.localPosition - rect.localPosition).normalized;
+        while ((rect.localPosition - target.localPosition).sqrMagnitude >= 1f)
+        {
+            yield return null;
+            rect.transform.position = Vector3.SmoothDamp(rect.position, target.position, ref currentVelocity, smoothTime, showSpeed);
+        }
     }
 }

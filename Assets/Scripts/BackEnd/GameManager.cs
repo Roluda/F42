@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         else if(Instance!=this)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -30,12 +30,19 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient)
         {
             Player[] playersInRoom = PhotonNetwork.PlayerList; 
-            bool[] rebs = NewRebelSetup(playersInRoom.Length, 2); //Spielerzahl festlegen //Später: Position zufällig
+            bool[] rebs = NewRebelSetup(playersInRoom.Length -1, 2); //Spielerzahl festlegen //Später: Position zufällig
             for (int i = 0; i < playersInRoom.Length; i++)
             {
                 ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
-                props.Add("IsRebel", rebs[i]);
-                props.Add("Position", i+1);
+                props.Add("Position", i + 1);
+                if (i < playersInRoom.Length - 1)
+                {
+                    props.Add("IsRebel", rebs[i]);
+                }
+                else
+                {
+                    props.Add("IsRebel", false);
+                }
                 PhotonNetwork.PlayerList[i].SetCustomProperties(props); //Synchron auf allen clients
             }
         }
@@ -45,8 +52,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (target == PhotonNetwork.LocalPlayer && changedProps.ContainsKey("Position"))
         {
+            int position = (int)changedProps["Position"];
+            int players = PhotonNetwork.PlayerList.Length;
             PhotonNetwork.AutomaticallySyncScene = false;
-            SceneManager.LoadScene("FourPlayer" + changedProps["Position"].ToString());
+            if (position == players)
+            {
+                SceneManager.LoadScene("Overseer");
+            }
+            else
+            {
+                SceneManager.LoadScene("Player" + position);
+            }
         }
     }
 
@@ -63,7 +79,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         PhotonNetwork.Destroy(gameObject);
     }
 
-    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         //Waiting? Return to Lobby --> Everyone Leave Room!
         if (!isLeaving)

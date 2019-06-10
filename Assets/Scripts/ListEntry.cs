@@ -53,6 +53,10 @@ public class ListEntry : MonoBehaviour
         }
         set
         {
+            if (value == _state)
+            {
+                return;
+            }
             if(value != ListEntryState.empty)
             {
                 toggleGroup.allowSwitchOff = false;
@@ -74,6 +78,7 @@ public class ListEntry : MonoBehaviour
         if (value)
         {
             State = ListEntryState.electricity;
+            SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.Others, position - 1, (int)ListEntryState.electricity);
         }
     }
 
@@ -82,6 +87,7 @@ public class ListEntry : MonoBehaviour
         if (value)
         {
             State = ListEntryState.gas;
+            SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.Others, position - 1, (int)ListEntryState.gas);
         }
     }
 
@@ -90,6 +96,7 @@ public class ListEntry : MonoBehaviour
         if (value)
         {
             State = ListEntryState.pieces;
+            SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.Others, position - 1, (int)ListEntryState.pieces);
         }
     }
 }

@@ -4,25 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PiecesDisplay : MonoBehaviour
+public class PiecesDisplay : ResourceDisplay
 {
-    [SerializeField]
-    TMP_Text display = null;
-
-    void Awake()
-    {
-        PlayerController.OnResourceChange += OnValueChange;
-    }
-    void Start()
-    {
-        display.text = PlayerController.Instance.Pieces.ToString();
-    }
-
-    void OnValueChange(ResourceType type, int newValue)
+    protected override void OnValueChanged(ResourceType type, float newValue)
     {
         if (type == ResourceType.pieces)
         {
-            display.text = newValue.ToString();
+            CurrentValue = newValue;
         }
     }
 }

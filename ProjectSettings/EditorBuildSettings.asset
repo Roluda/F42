@@ -9,18 +9,24 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: c129234ee6725474c9a6d8e5ce1abb1e
   - enabled: 1
-    path: Assets/Scenes/FourPlayer1.unity
-    guid: c78a6a3483604a9468e3a39ec4d430d8
-  - enabled: 1
-    path: Assets/Scenes/FourPlayer2.unity
-    guid: 7f0d68fb76998ba4a97cae16822189d3
-  - enabled: 1
-    path: Assets/Scenes/FourPlayer3.unity
-    guid: aaed3014755b36945a1d49736e9c570f
-  - enabled: 1
-    path: Assets/Scenes/FourPlayer4.unity
-    guid: dc4f029a5a9ca984b8fc14b46ada4e46
-  - enabled: 1
     path: Assets/Scenes/Transfer.unity
     guid: 821af0eb3120c504796c7f9936174ce7
+  - enabled: 1
+    path: Assets/Scenes/Player1.unity
+    guid: c78a6a3483604a9468e3a39ec4d430d8
+  - enabled: 1
+    path: Assets/Scenes/Player2.unity
+    guid: 7f0d68fb76998ba4a97cae16822189d3
+  - enabled: 1
+    path: Assets/Scenes/Player3.unity
+    guid: aaed3014755b36945a1d49736e9c570f
+  - enabled: 1
+    path: Assets/Scenes/Player4.unity
+    guid: a02ac509a720ad341921da6197d7ca44
+  - enabled: 1
+    path: Assets/Scenes/Player5.unity
+    guid: 223fe48b922845240b6456887c197a1b
+  - enabled: 1
+    path: Assets/Scenes/Overseer.unity
+    guid: dc4f029a5a9ca984b8fc14b46ada4e46
   m_configObjects: {}

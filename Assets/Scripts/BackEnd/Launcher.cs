@@ -10,10 +10,14 @@ public class Launcher : MonoBehaviourPunCallbacks
 {
     [Tooltip("The maximum number of players per Room")]
     [SerializeField]
+    private byte minimumPlayersPerRoom = 3;
+    [SerializeField]
     private byte maximumPlayersPerRoom = 6;
 
     [SerializeField]
     GameObject connectionPanel = null;
+    [SerializeField]
+    GameObject startMatchButton = null;
     [SerializeField]
     TMP_Text connectionText = null;
 
@@ -26,12 +30,24 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(Gun), 255, Gun.Serialize, Gun.Deserialize);
+        ExitGames.Client.Photon.PhotonPeer.RegisterType(typeof(ResourceVector), 254, ResourceVector.Serialize, ResourceVector.Deserialize);
     }
 
     void Start()
     {
         connectionPanel.SetActive(true);
         connectionText.text = "";
+        if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
+        {
+            if (PhotonNetwork.CurrentRoom.PlayerCount >= minimumPlayersPerRoom && PhotonNetwork.CurrentRoom.PlayerCount <= maximumPlayersPerRoom)
+            {
+                startMatchButton.SetActive(true);
+            }
+        }
+        else
+        {
+            startMatchButton.SetActive(false);
+        }
     }
 
     public void Connect()
@@ -49,6 +65,14 @@ public class Launcher : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
         }
 
+    }
+
+    public void StartMatch()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Transfer");
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -77,26 +101,41 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        connectionText.text = "room " + roomID + ": " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + " connected";
+        connectionText.text = "room " + roomID + ": " + PhotonNetwork.CurrentRoom.PlayerCount +" players connected";
         Debug.Log("OnJoinedRoom was called by Launcher");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        connectionText.text = "room " + roomID +": "+ PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers +" connected";
-        if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
+        connectionText.text = "room " + roomID +": "+ PhotonNetwork.CurrentRoom.PlayerCount + " players connected";
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= minimumPlayersPerRoom && PhotonNetwork.CurrentRoom.PlayerCount <= maximumPlayersPerRoom)
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.LoadLevel("Transfer");
+                startMatchButton.SetActive(true);
             }
+        }
+        else
+        {
+            startMatchButton.SetActive(false);
         }
         Debug.Log("PlayerConnected");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        connectionText.text = "room " + roomID + ": " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + " connected";
-        connectionText.text = PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + " connected";
+        connectionText.text = "room " + roomID + ": " + PhotonNetwork.CurrentRoom.PlayerCount + " players connected";
+        connectionText.text = PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers + " players connected";
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= minimumPlayersPerRoom && PhotonNetwork.CurrentRoom.PlayerCount <= maximumPlayersPerRoom)
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                startMatchButton.SetActive(true);
+            }
+        }
+        else
+        {
+            startMatchButton.SetActive(false);
+        }
     }
 }

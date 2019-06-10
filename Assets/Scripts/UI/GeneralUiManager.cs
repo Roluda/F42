@@ -18,23 +18,30 @@ public class GeneralUiManager : MonoBehaviour
 
     void Awake()
     {
-        PlayerController.OnAssembleStartet += UpdateWorkloadText;
-        PlayerController.OnAssembleFinished += UpdateWorkloadText;
-        PlayerController.OnGunReceived += UpdateWorkloadText;
+        AssemblyPlayer.OnAssembleStartet += UpdateWorkloadText;
+        AssemblyPlayer.OnAssembleFinished += UpdateWorkloadText;
+        WeaponWorkload.OnGunReceived += UpdateWorkloadText;
     }
 
     void Start()
     {
-        workLoadCount.text = PlayerController.Instance.workLoad.Count.ToString();
+        workLoadCount.text = WeaponWorkload.Instance.workLoad.Count.ToString();
     }
 
     void UpdateWorkloadText()
     {
-        workLoadCount.text = PlayerController.Instance.workLoad.Count.ToString();
+        workLoadCount.text = WeaponWorkload.Instance.workLoad.Count.ToString();
     }
 
     void UpdateWorkloadText(Gun gun)
     {
-        workLoadCount.text = PlayerController.Instance.workLoad.Count.ToString();
+        workLoadCount.text = WeaponWorkload.Instance.workLoad.Count.ToString();
+    }
+
+    void OnDestroy()
+    {
+        AssemblyPlayer.OnAssembleStartet -= UpdateWorkloadText;
+        AssemblyPlayer.OnAssembleFinished -= UpdateWorkloadText;
+        WeaponWorkload.OnGunReceived -= UpdateWorkloadText;
     }
 }
