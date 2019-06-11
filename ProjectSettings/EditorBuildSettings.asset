@@ -29,4 +29,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Overseer.unity
     guid: dc4f029a5a9ca984b8fc14b46ada4e46
+  - enabled: 1
+    path: Assets/Scenes/RebelWin.unity
+    guid: c177928cc5ba56246b702a61109aac19
+  - enabled: 1
+    path: Assets/Scenes/LoyalWin.unity
+    guid: 09c03e7717f846d4fa907585af676259
   m_configObjects: {}

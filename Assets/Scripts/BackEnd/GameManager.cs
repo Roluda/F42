@@ -10,6 +10,7 @@ using ExitGames.Client.Photon;
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public static GameManager Instance;
+
     bool isLeaving = false;
 
     void Awake()
@@ -21,29 +22,33 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         }
         else if(Instance!=this)
         {
-            Destroy(gameObject);
+            DestroyImmediate(gameObject);
         }
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
 
-    void Start()
-    {         
-        if (PhotonNetwork.IsMasterClient)
+
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Transfer")
         {
-            Player[] playersInRoom = PhotonNetwork.PlayerList; 
-            bool[] rebs = NewRebelSetup(playersInRoom.Length -1, 2); //Spielerzahl festlegen //Später: Position zufällig
-            for (int i = 0; i < playersInRoom.Length; i++)
-            {
-                ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
-                props.Add("Position", i + 1);
-                if (i < playersInRoom.Length - 1)
+            if (PhotonNetwork.IsMasterClient) {
+                Player[] playersInRoom = PhotonNetwork.PlayerList;
+                bool[] rebs = NewRebelSetup(playersInRoom.Length - 1, 2); //Spielerzahl festlegen //Später: Position zufällig
+                for (int i = 0; i < playersInRoom.Length; i++)
                 {
-                    props.Add("IsRebel", rebs[i]);
+                    ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable();
+                    props.Add("Position", i + 1);
+                    if (i < playersInRoom.Length - 1)
+                    {
+                        props.Add("IsRebel", rebs[i]);
+                    }
+                    else
+                    {
+                        props.Add("IsRebel", false);
+                    }
+                    PhotonNetwork.PlayerList[i].SetCustomProperties(props); //Synchron auf allen clients
                 }
-                else
-                {
-                    props.Add("IsRebel", false);
-                }
-                PhotonNetwork.PlayerList[i].SetCustomProperties(props); //Synchron auf allen clients
             }
         }
     }
@@ -53,16 +58,44 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         if (target == PhotonNetwork.LocalPlayer && changedProps.ContainsKey("Position"))
         {
             int position = (int)changedProps["Position"];
+            bool isRebel = (bool)changedProps["IsRebel"];
             int players = PhotonNetwork.PlayerList.Length;
-            PhotonNetwork.AutomaticallySyncScene = false;
             if (position == players)
             {
-                SceneManager.LoadScene("Overseer");
+                StartCoroutine(LoadGameSceneDelayed("Overseer", 14));
             }
             else
             {
-                SceneManager.LoadScene("Player" + position);
+                TransitManager.Instance.DisplayRole(isRebel);
+                StartCoroutine(LoadGameSceneDelayed("Player" + position, 14));
             }
+        }
+    }
+
+    IEnumerator LoadGameSceneDelayed(string sceneName, float delay)
+    {
+        PhotonNetwork.AutomaticallySyncScene = false;
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    [PunRPC]
+    public void RebelWin()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        if (PhotonNetwork.IsMasterClient || !PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.LoadLevel("RebelWin");
+        }
+    }
+
+    [PunRPC]
+    public void LoyalWin()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+        if (PhotonNetwork.IsMasterClient || !PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.LoadLevel("LoyalWin");
         }
     }
 
