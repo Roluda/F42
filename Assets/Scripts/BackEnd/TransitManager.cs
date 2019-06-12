@@ -45,6 +45,7 @@ public class TransitManager : MonoBehaviour
         {
             roleImage = loyalImage;
         }
+        StopAllCoroutines();
         StartCoroutine(DisplayProcedure());
     }
 

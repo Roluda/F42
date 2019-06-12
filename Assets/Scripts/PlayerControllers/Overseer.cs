@@ -19,6 +19,7 @@ public class Overseer : PlayerController
     public override void CustomSetup()
     {
         WeaponWorkload.OnGunReceived += OnGunReceived;
+        goalDisplay.text = WeaponWorkload.Instance.workLoad.Count + "/" + productionGoal + " guns assembled";
     }
 
     void Update()
@@ -40,7 +41,7 @@ public class Overseer : PlayerController
             }
         }
         System.TimeSpan ts = System.TimeSpan.FromSeconds(goalTime);
-        remainingDisplay.text = "time remaining: " + ts.Seconds;
+        remainingDisplay.text = string.Format("{0:D2}:{1:D2} remaining", ts.Minutes, ts.Seconds);
     }
 
     public void OnGunReceived(Gun g) {

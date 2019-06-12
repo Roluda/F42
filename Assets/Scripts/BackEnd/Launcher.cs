@@ -20,9 +20,11 @@ public class Launcher : MonoBehaviourPunCallbacks
     GameObject startMatchButton = null;
     [SerializeField]
     TMP_Text connectionText = null;
+    [SerializeField]
+    GameObject disconnectionButton = null;
 
     private bool isConnecting;
-    private string gameVersion = "1";
+    private string gameVersion = "0.2";
 
     public static string roomID = "def";
 
@@ -37,6 +39,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         connectionPanel.SetActive(true);
         connectionText.text = "";
+        disconnectionButton.SetActive(false);
         if (PhotonNetwork.IsConnected && PhotonNetwork.IsMasterClient)
         {
             if (PhotonNetwork.CurrentRoom.PlayerCount >= minimumPlayersPerRoom && PhotonNetwork.CurrentRoom.PlayerCount <= maximumPlayersPerRoom)
@@ -64,7 +67,11 @@ public class Launcher : MonoBehaviourPunCallbacks
             PhotonNetwork.GameVersion = gameVersion;
             PhotonNetwork.ConnectUsingSettings();
         }
+    }
 
+    public void Disconnect()
+    {
+        PhotonNetwork.Disconnect();
     }
 
     public void StartMatch()
@@ -87,6 +94,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        disconnectionButton.SetActive(false);
         connectionPanel.SetActive(true);
         connectionText.text = "";
         Debug.LogWarningFormat("OnDisconnected called by Launcher with reason {0}", cause);
@@ -101,7 +109,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        connectionText.text = "room " + roomID + ": " + PhotonNetwork.CurrentRoom.PlayerCount +" players connected";
+        disconnectionButton.SetActive(true);
+        connectionText.text = "room " + roomID + ": " + PhotonNetwork.CurrentRoom.PlayerCount +" players connected";        
         Debug.Log("OnJoinedRoom was called by Launcher");
     }
 

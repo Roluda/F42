@@ -88,9 +88,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceCap: 100
   initialResources:
-    electricity: 80
-    gas: 80
-    pieces: 80
+    electricity: 50
+    gas: 50
+    pieces: 50
   resourceGainOnSupply:
     electricity: 20
     gas: 20

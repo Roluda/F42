@@ -59,6 +59,7 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
         {
             ClearList();
         }
+        showSpeed = showSpeed * Screen.height / 100;
     }
 
     void Update()
@@ -145,7 +146,7 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
     public void UpdateCountdown(float time)
     {
         System.TimeSpan timeSpan = System.TimeSpan.FromSeconds(time);
-        countdownText.text = "resupply in: " + timeSpan.Seconds;
+        countdownText.text = "resupply: " + timeSpan.Seconds;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

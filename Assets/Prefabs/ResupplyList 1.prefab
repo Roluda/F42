@@ -235,8 +235,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -225}
-  m_SizeDelta: {x: 800, y: 450}
+  m_AnchoredPosition: {x: 0, y: -3.5}
+  m_SizeDelta: {x: 0, y: 7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2314836576936057962
 MonoBehaviour:
@@ -254,10 +254,10 @@ MonoBehaviour:
   ui_element: {fileID: 4741212922177591202}
   showPos: {fileID: 3797988529217806163}
   hidePos: {fileID: 206206224996724234}
-  showSpeed: 1000
+  showSpeed: 400
   smoothTime: 0.2
   entryParent: {fileID: 4156929426411418243}
-  countdownText: {fileID: 2498852603534137253}
+  countdownText: {fileID: 5919478428272514285}
   spaceBetweenEntries: 50
   entryPrefab: {fileID: 5067564715020793184, guid: 5433de3b07a459544b8b8fe3ecb1265f,
     type: 3}
@@ -315,7 +315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 32}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5616125012182436167
@@ -477,7 +477,7 @@ RectTransform:
   m_GameObject: {fileID: 8086363399376185441}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 4156929426411418243}
   - {fileID: 4495118060797725704}
