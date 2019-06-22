@@ -19,7 +19,7 @@ public class ResourceManager : MonoBehaviourPunCallbacks, IPunObservable
     ResourceVector resourceGainOnSupply = new ResourceVector(20, 20, 20);
     [SerializeField]
     float resupplyInterval = 30;
-    float time;
+    public float timeTillSupply;
 
     protected float _electricity;
     protected float _gas;
@@ -90,21 +90,21 @@ public class ResourceManager : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
     {
         AddResources(initialResources);
-        time = resupplyInterval;
+        timeTillSupply = resupplyInterval;
     }
 
     void Update()
     {
-        time -= Time.deltaTime;
-        if (time <= 0)
+        timeTillSupply -= Time.deltaTime;
+        if (timeTillSupply <= 0)
         {
-            time = resupplyInterval;
+            timeTillSupply = resupplyInterval;
             if (PhotonNetwork.IsMasterClient)
             {
                 SendSupplyToPlayers();
             }
         }
-        SupplyList.Instance.UpdateCountdown(time);
+        SupplyList.Instance.UpdateCountdown(timeTillSupply);
     }
 
     public bool CheckSufficieny(ResourceVector value)

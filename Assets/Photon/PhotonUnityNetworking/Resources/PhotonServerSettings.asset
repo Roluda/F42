@@ -41,5 +41,8 @@ MonoBehaviour:
   - RemoveResources
   - LoyalWin
   - RebelWin
+  - AiActive
+  - Eliminate
+  - KillWorker
   DisableAutoOpenWizard: 1
   ShowSettings: 1

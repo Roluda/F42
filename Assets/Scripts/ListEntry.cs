@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
 public enum ListEntryState {empty=0, electricity=1, gas=2,pieces=3}
 
 public class ListEntry : MonoBehaviour
 {
-    public Toggle[] toggles;
+    public delegate void EntryChangeAction(ListEntry entry);
+    public static event EntryChangeAction OnEntryChange;
+
+    public ListEntryToggle[] toggles;
     [SerializeField]
     ToggleGroup toggleGroup = null;
     [SerializeField]
@@ -53,10 +57,6 @@ public class ListEntry : MonoBehaviour
         }
         set
         {
-            if (value == _state)
-            {
-                return;
-            }
             if(value != ListEntryState.empty)
             {
                 toggleGroup.allowSwitchOff = false;
@@ -70,33 +70,41 @@ public class ListEntry : MonoBehaviour
             }
             Debug.Log("Set State of " + Name + " to " + value);
             _state = value;
+            OnEntryChange?.Invoke(this);
         }
     }
 
-    public void SetStateToElectricity(bool value)
+    void Start()
     {
-        if (value)
+        if (toggles.Length == 3)
         {
-            State = ListEntryState.electricity;
-            SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.Others, position - 1, (int)ListEntryState.electricity);
+            toggles[0].OnClick += SetStateToElectricity;
+            toggles[1].OnClick += SetStateToGas;
+            toggles[2].OnClick += SetStateToPieces;
         }
     }
 
-    public void SetStateToGas(bool value)
+    public void SetStateToElectricity()
     {
-        if (value)
+        if (PhotonNetwork.IsConnected)
         {
-            State = ListEntryState.gas;
-            SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.Others, position - 1, (int)ListEntryState.gas);
+            SupplyList.Instance.photonView.RPC("ChangeState", RpcTarget.MasterClient, position, (int)ListEntryState.electricity);
         }
     }
 
-    public void SetStateToPieces(bool value)
+    public void SetStateToGas()
     {
-        if (value)
+        if (PhotonNetwork.IsConnected)
         {
-            State = ListEntryState.pieces;
-            SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.Others, position - 1, (int)ListEntryState.pieces);
+            SupplyList.Instance.photonView.RPC("ChangeState", RpcTarget.MasterClient, position, (int)ListEntryState.gas);
+        }
+    }
+
+    public void SetStateToPieces()
+    {
+        if (PhotonNetwork.IsConnected)
+        {
+            SupplyList.Instance.photonView.RPC("ChangeState", RpcTarget.MasterClient, position, (int)ListEntryState.pieces);
         }
     }
 }

@@ -64,15 +64,18 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
 
     void Update()
     {
-
     }
 
     [PunRPC]
-    void ChangeState(int entry, ListEntryState state)
+    void ChangeState(int position, ListEntryState state)
     {
-        if (entry < listEntries.Length && entry>=0)
+        if (PhotonNetwork.IsMasterClient)
         {
-            listEntries[entry].State = state;
+            photonView.RPC("ChangeState", RpcTarget.Others, position, state);
+        }
+        if (position <= listEntries.Length && position>0)
+        {
+            listEntries[position-1].State = state;
         }
         else
         {

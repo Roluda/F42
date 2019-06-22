@@ -35,6 +35,12 @@ public class TransitManager : MonoBehaviour
         DisplayRole(Random.value>0.5);
     }
 
+    public void DisplayOverseer()
+    {
+        StopAllCoroutines();
+        StartCoroutine(OverseerIntroProcedure());
+    }
+
     public void DisplayRole(bool isRebel)
     {
         if (isRebel)
@@ -46,10 +52,24 @@ public class TransitManager : MonoBehaviour
             roleImage = loyalImage;
         }
         StopAllCoroutines();
-        StartCoroutine(DisplayProcedure());
+        StartCoroutine(AssemblyIntroProcedure());
     }
 
-    IEnumerator DisplayProcedure()
+    IEnumerator OverseerIntroProcedure()
+    {
+        StartCoroutine(TypeText(instructions, "you are the overseer", 2));
+        yield return new WaitForSeconds(3);
+        StartCoroutine(TypeText(instructions, "motivate your fellow employees", 2));
+        yield return new WaitForSeconds(3);
+        StartCoroutine(TypeText(instructions, "find and eliminate the rebels", 2));
+        yield return new WaitForSeconds(3);
+        StartCoroutine(TypeText(instructions, "avoid killing loyal workers", 2));
+        yield return new WaitForSeconds(3);
+        StartCoroutine(TypeText(instructions, "...", 2));
+        yield return new WaitForSeconds(3);
+    }
+
+    IEnumerator AssemblyIntroProcedure()
     {
         StartCoroutine(TypeText(instructions, "the game is about to start", 2));
         yield return new WaitForSeconds(3);

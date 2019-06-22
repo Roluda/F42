@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
             int players = PhotonNetwork.PlayerList.Length;
             if (position == players)
             {
+                TransitManager.Instance.DisplayOverseer();
                 StartCoroutine(LoadGameSceneDelayed("Overseer", 14));
             }
             else
@@ -77,6 +78,19 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
         PhotonNetwork.AutomaticallySyncScene = false;
         yield return new WaitForSeconds(delay);
         SceneManager.LoadScene(sceneName);
+    }
+
+    [PunRPC]
+    public void KillWorker()
+    {
+        if (PlayerController.isRebel)
+        {
+            AssemblyAgent.Agent.Instance.Active = true;
+        }
+        else
+        {
+            photonView.RPC("RebelWin", RpcTarget.All);
+        }
     }
 
     [PunRPC]

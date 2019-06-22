@@ -92,10 +92,11 @@ MonoBehaviour:
     gas: 50
     pieces: 50
   resourceGainOnSupply:
-    electricity: 20
-    gas: 20
-    pieces: 20
-  resupplyInterval: 15
+    electricity: 30
+    gas: 30
+    pieces: 30
+  resupplyInterval: 10
+  timeTillSupply: 0
 --- !u!114 &8933858139696384109
 MonoBehaviour:
   m_ObjectHideFlags: 0
