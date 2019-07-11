@@ -760,7 +760,7 @@ PrefabInstance:
     - target: {fileID: 2572590139463750335, guid: 55c62ce1242e1114b9b1979724165f58,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 38743941146043116, guid: 55c62ce1242e1114b9b1979724165f58,
         type: 3}
@@ -830,6 +830,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8202968301934175382, guid: f13be759598b5f648b6ad723a89fce32,
+        type: 3}
+      propertyPath: m_Name
+      value: Overseer
+      objectReference: {fileID: 0}
     - target: {fileID: 8202968301934175380, guid: f13be759598b5f648b6ad723a89fce32,
         type: 3}
       propertyPath: theList
@@ -838,12 +843,12 @@ PrefabInstance:
     - target: {fileID: 8202968301934175380, guid: f13be759598b5f648b6ad723a89fce32,
         type: 3}
       propertyPath: goalTime
-      value: 180
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 8202968301934175380, guid: f13be759598b5f648b6ad723a89fce32,
         type: 3}
       propertyPath: productionGoal
-      value: 100
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8202968301934175380, guid: f13be759598b5f648b6ad723a89fce32,
         type: 3}
@@ -870,11 +875,6 @@ PrefabInstance:
         type: 3}
       propertyPath: spaceBetweenButtons
       value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 8202968301934175382, guid: f13be759598b5f648b6ad723a89fce32,
-        type: 3}
-      propertyPath: m_Name
-      value: Overseer
       objectReference: {fileID: 0}
     - target: {fileID: 8202968301934175381, guid: f13be759598b5f648b6ad723a89fce32,
         type: 3}

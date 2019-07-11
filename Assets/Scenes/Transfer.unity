@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 59274363}
   - component: {fileID: 59274364}
   m_Layer: 0
-  m_Name: KGB
+  m_Name: Rebel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,7 +185,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 038b748e3bca6d747b49d23bf2d1f20e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d36b683381712754ca1eaba038cc656b, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -659,7 +659,7 @@ GameObject:
   - component: {fileID: 1940231372}
   - component: {fileID: 1940231371}
   m_Layer: 0
-  m_Name: US
+  m_Name: Nazi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -704,7 +704,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 7dadc2140b6b5834d863e2e7ebfdfa90, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f0531c4be6fba84292c1bd71284487a, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

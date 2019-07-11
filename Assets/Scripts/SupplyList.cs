@@ -165,4 +165,12 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
             rect.transform.position = Vector3.SmoothDamp(rect.position, target.position, ref currentVelocity, smoothTime, showSpeed);
         }
     }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
 }

@@ -51,4 +51,12 @@ public class ConfirmPopup : MonoBehaviour
     {
         panel.SetActive(false);
     }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
 }

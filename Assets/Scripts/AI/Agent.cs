@@ -123,6 +123,14 @@ namespace AssemblyAgent
                     break;
             }
         }
+
+        void OnDestroy()
+        {
+            if (Instance == this)
+            {
+                Instance = null;
+            }
+        }
     }
 }
 

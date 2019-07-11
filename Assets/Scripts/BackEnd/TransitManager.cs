@@ -115,4 +115,12 @@ public class TransitManager : MonoBehaviour
             yield return null;
         }
     }
+
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
 }

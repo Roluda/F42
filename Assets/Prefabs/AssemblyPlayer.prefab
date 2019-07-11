@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2856499328758866668}
   - component: {fileID: 2968546191698477453}
   - component: {fileID: 8933858139696384109}
+  - component: {fileID: 8229034769782239757}
   m_Layer: 0
   m_Name: AssemblyPlayer
   m_TagString: Untagged
@@ -110,3 +111,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialGuns: 5
+--- !u!114 &8229034769782239757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2856499328758866667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13e0621f9af856a4287f754e24715578, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeMargin: 0.1
