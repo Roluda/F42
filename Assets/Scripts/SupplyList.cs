@@ -159,7 +159,6 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
 
     IEnumerator MoveTransform(RectTransform rect, RectTransform target)
     {
-        Vector3 direction = (target.localPosition - rect.localPosition).normalized;
         while ((rect.localPosition - target.localPosition).sqrMagnitude >= 1f)
         {
             yield return null;

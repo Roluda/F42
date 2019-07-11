@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FinishGun : StateMachineBehaviour
-{
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+namespace AssemblyAgent{
+    public class FinishGun : StateMachineBehaviour
     {
-        AssemblyPlayer.Instance.FinishAssembly();
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            AssemblyPlayer.Instance.FinishAssembly();
+        }
     }
 }

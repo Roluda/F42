@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DemandGas : StateMachineBehaviour
+namespace AssemblyAgent
 {
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public class DemandGas : StateMachineBehaviour
     {
-        Debug.Log("Demand Gas");
-        SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.MasterClient, PlayerController.position, ListEntryState.gas);
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            Debug.Log("Demand Gas");
+            SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.MasterClient, PlayerController.position, ListEntryState.gas);
+        }
     }
 }

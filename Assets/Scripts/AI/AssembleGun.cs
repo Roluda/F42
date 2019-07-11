@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AssembleGun : StateMachineBehaviour
+namespace AssemblyAgent
 {
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public class AssembleGun : StateMachineBehaviour
     {
-        AssemblyPlayer.Instance.ConstructGun();
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            AssemblyPlayer.Instance.ConstructGun();
+        }
     }
 }

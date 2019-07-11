@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DemandPieces : StateMachineBehaviour
+namespace AssemblyAgent
 {
-    public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    public class DemandPieces : StateMachineBehaviour
     {
-        Debug.Log("Demand Pieces");
-        SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.MasterClient, PlayerController.position, ListEntryState.pieces);
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            Debug.Log("Demand Pieces");
+            SupplyList.Instance.photonView.RPC("ChangeState", Photon.Pun.RpcTarget.MasterClient, PlayerController.position, ListEntryState.pieces);
+        }
     }
 }
