@@ -24,11 +24,13 @@ namespace AssemblyAgent
             {
                 if (value)
                 {
+                    AssemblyPlayer.Instance.blockedInput = true;
                     ResourceManager.OnResourceChange += OnResourceChange;
                     ListEntry.OnEntryChange += OnListEntryChange;
                 }
                 else
                 {
+                    AssemblyPlayer.Instance.blockedInput = false;
                     ResourceManager.OnResourceChange -= OnResourceChange;
                     ListEntry.OnEntryChange -= OnListEntryChange;
                 }

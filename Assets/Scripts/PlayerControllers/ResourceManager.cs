@@ -36,8 +36,8 @@ public class ResourceManager : MonoBehaviourPunCallbacks, IPunObservable
             value = Mathf.Clamp(value, 0, resourceCap);
             if (value != _electricity)
             {
-                OnResourceChange?.Invoke(ResourceType.electricity, value);
                 _electricity = value;
+                OnResourceChange?.Invoke(ResourceType.electricity, value);
             }
         }
     }
@@ -52,8 +52,8 @@ public class ResourceManager : MonoBehaviourPunCallbacks, IPunObservable
             value = Mathf.Clamp(value, 0, resourceCap);
             if (value != _gas)
             {
-                OnResourceChange?.Invoke(ResourceType.gas, value);
                 _gas = value;
+                OnResourceChange?.Invoke(ResourceType.gas, value);
             }
         }
     }
@@ -68,8 +68,8 @@ public class ResourceManager : MonoBehaviourPunCallbacks, IPunObservable
             value = Mathf.Clamp(value, 0, resourceCap);
             if (value != _pieces)
             {
-                OnResourceChange?.Invoke(ResourceType.pieces, value);
                 _pieces = value;
+                OnResourceChange?.Invoke(ResourceType.pieces, value);
             }
         }
     }
@@ -104,7 +104,6 @@ public class ResourceManager : MonoBehaviourPunCallbacks, IPunObservable
                 SendSupplyToPlayers();
             }
         }
-        SupplyList.Instance.UpdateCountdown(timeTillSupply);
     }
 
     public bool CheckSufficieny(ResourceVector value)

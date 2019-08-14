@@ -25,12 +25,24 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField]
     TMP_Text countdownText = null;
     [SerializeField]
-    float spaceBetweenEntries = 50;
+    float spaceBetweenEntries = 30;
     [SerializeField]
     ListEntry entryPrefab = null;
 
     Vector3 currentVelocity;
     bool isShowing;
+
+    float SpaceBetweenEntries
+    {
+        get
+        {
+            return ((17 / 100f) * ui_element.rect.height);
+        }
+        set
+        {
+            spaceBetweenEntries = value;
+        }
+    }
 
     void Awake()
     {
@@ -64,6 +76,7 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
 
     void Update()
     {
+        UpdateCountdown(ResourceManager.Instance.timeTillSupply);
     }
 
     [PunRPC]
@@ -110,7 +123,7 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
                     listEntries[i].position = i + 1;
                     listEntries[i].Name = player.NickName;
                     listEntries[i].State = ListEntryState.empty;
-                    listEntries[i].GetComponent<RectTransform>().localPosition = new Vector3(0, -(i + 1) * spaceBetweenEntries, 0);
+                    listEntries[i].GetComponent<RectTransform>().localPosition = new Vector3(0, -(i + 1) * SpaceBetweenEntries, 0);
                 }
             }
         }
@@ -124,7 +137,7 @@ public class SupplyList : MonoBehaviourPunCallbacks, IPunObservable
                 listEntries[i].position = j;
                 listEntries[i].Name = "Debug "+j;
                 listEntries[i].State = ListEntryState.empty;
-                listEntries[i].GetComponent<RectTransform>().localPosition = new Vector3(0, -j * spaceBetweenEntries, 0);
+                listEntries[i].GetComponent<RectTransform>().localPosition = new Vector3(0, -j * SpaceBetweenEntries, 0);
             }
         }
     }

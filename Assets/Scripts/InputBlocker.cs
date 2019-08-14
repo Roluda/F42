@@ -40,11 +40,12 @@ public class InputBlocker : MonoBehaviour
     IEnumerator BlockInput(float time)
     {
         isBlocked = true;
+        AssemblyPlayer.Instance.blockedInput = true;
         blockingImage.SetActive(true);
         float t = 0;
         while (t < time)
         {
-            countdown.text = System.Math.Round(blockTime - t, 1).ToString();
+            countdown.text = System.Math.Round(blockTime - t, 0).ToString();
             t += Time.deltaTime;
             if(blockTime-t < 1)
             {
@@ -55,6 +56,7 @@ public class InputBlocker : MonoBehaviour
         }
         countdown.text = "";
         blockingImage.SetActive(false);
+        AssemblyPlayer.Instance.blockedInput = false;
     }
 
     void OnDisable()

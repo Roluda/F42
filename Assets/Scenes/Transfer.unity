@@ -401,15 +401,16 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: the following information is top secret
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ed0571703cf2e1248b20de09d42cdf29, type: 2}
+  m_sharedMaterial: {fileID: 1576873203738017862, guid: ed0571703cf2e1248b20de09d42cdf29,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4281803427
+  m_fontColor: {r: 0.6392157, g: 0.13333334, b: 0.21568629, a: 1}
   m_enableVertexGradient: 1
   m_colorMode: 3
   m_fontColorGradient:
@@ -514,16 +515,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: -5382345036125468009, guid: 068d6268a061df4428d38dc5a6018d34,
-        type: 3}
-      propertyPath: viewIdField
-      value: 999
-      objectReference: {fileID: 0}
-    - target: {fileID: -5382345036125468009, guid: 068d6268a061df4428d38dc5a6018d34,
-        type: 3}
-      propertyPath: InstantiationId
-      value: 999
-      objectReference: {fileID: 0}
     - target: {fileID: 4365155279138000777, guid: 068d6268a061df4428d38dc5a6018d34,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -578,6 +569,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5382345036125468009, guid: 068d6268a061df4428d38dc5a6018d34,
+        type: 3}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5382345036125468009, guid: 068d6268a061df4428d38dc5a6018d34,
+        type: 3}
+      propertyPath: InstantiationId
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 068d6268a061df4428d38dc5a6018d34, type: 3}

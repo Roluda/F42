@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-
 public class PlayerController : MonoBehaviourPunCallbacks
 {
     public static bool isRebel = true;
@@ -18,7 +17,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     void Start()
     {
         if (PhotonNetwork.IsConnected) {
+            Debug.Log("PlayerConroller is connected");
             isRebel = (bool)PhotonNetwork.LocalPlayer.CustomProperties["IsRebel"];
+            Debug.Log("Position: " + (int)PhotonNetwork.LocalPlayer.CustomProperties["Position"]);
             position = (int)PhotonNetwork.LocalPlayer.CustomProperties["Position"];
             assemblyPlayers = PhotonNetwork.PlayerList.Length - 1;
         }

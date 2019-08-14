@@ -17,6 +17,8 @@ public class ListEntry : MonoBehaviour
     ToggleGroup toggleGroup = null;
     [SerializeField]
     TMP_Text NameText = null;
+    [SerializeField]
+    Color highlightColor;
     private ListEntryState _state;
     private bool _isLocked;
     public int position;
@@ -46,6 +48,10 @@ public class ListEntry : MonoBehaviour
         set
         {
             NameText.text = value;
+            if(PhotonNetwork.NickName == value)
+            {
+                NameText.color = highlightColor;
+            }
         }
     }
 

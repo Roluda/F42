@@ -12,10 +12,14 @@ public class AssemblyPlayer : PlayerController, IPunObservable
     ResourceVector assembleCosts = new ResourceVector(1, 1, 1);
     public Gun currentGun = null;
 
+    public bool blockedInput;
+
     public delegate void StartAssembleAction();
     public static event StartAssembleAction OnAssembleStartet;
     public delegate void FinishAssembleAction();
     public static event FinishAssembleAction OnAssembleFinished;
+    public delegate void ConstructGunAction();
+    public static event ConstructGunAction OnGunConstructed;
 
     void Awake()
     {
@@ -35,7 +39,6 @@ public class AssemblyPlayer : PlayerController, IPunObservable
     {
         if (currentGun == null)
         {
-            Debug.Log("Started Assembling");
             currentGun = WeaponWorkload.Instance.TakeTopGun();
             OnAssembleStartet?.Invoke();
         }
@@ -54,22 +57,13 @@ public class AssemblyPlayer : PlayerController, IPunObservable
         }
         if (currentGun.Completion < position)
         {
-            Debug.Log("Constructing gun");
-            ResourceVector newCosts = new ResourceVector(
-                assembleCosts.electricity + Random.Range(0, assembleCosts.electricity),
-                assembleCosts.gas + Random.Range(0, assembleCosts.gas),
-                assembleCosts.pieces + Random.Range(0, assembleCosts.pieces)
-            );
-            if (ResourceManager.Instance.CheckSufficieny(newCosts))
-            {
-                currentGun.Completion++;
-                ResourceManager.Instance.RemoveResources(newCosts);
-            }
+            currentGun.Completion++;
+            OnGunConstructed?.Invoke();
         }
     }
 
     /// <summary>
-    /// call this method when a player attached his part to the current gun
+    /// call this method when a player attached his part to the current gun.
     /// </summary>
     public void FinishAssembly()
     {
@@ -92,19 +86,24 @@ public class AssemblyPlayer : PlayerController, IPunObservable
                 }
                 else
                 {
-                    Debug.Log("Assemble Gun first");
+                    currentGun = null;
                 }
             }
             else
             {
-                currentGun = null;
+                if (currentGun.Completion == position)
+                {
+                    currentGun = null;
+                    OnAssembleFinished?.Invoke();
+                }
+                else
+                {
+                    currentGun = null;
+                }
             }
         }
-        else
-        {
-            Debug.Log("Start Assembling First");
-        }
     }
+
 
 
     public void TrashResources()

@@ -32,6 +32,7 @@ public class WeaponWorkload : MonoBehaviourPunCallbacks, IPunObservable
     {
         for (int i = 0; i < initialGuns; i++)
         {
+            Debug.Log("AddedNewGun with Completion: " + (PlayerController.position - 1));
             Gun newGun = new Gun();
             newGun.MaxCompletion = PlayerController.assemblyPlayers;
             newGun.Completion = PlayerController.position - 1;

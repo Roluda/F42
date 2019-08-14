@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoyalWin.unity
     guid: 09c03e7717f846d4fa907585af676259
+  - enabled: 0
+    path: Assets/Scenes/MiniGameTest.unity
+    guid: 8adccd1bd5d17cd4abeddf402f383ccb
   m_configObjects: {}

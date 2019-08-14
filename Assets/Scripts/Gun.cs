@@ -6,6 +6,7 @@ public class Gun
 {
     private int _maxCompletion = 5;
     private int _completion;
+
     public int Completion
     {
         get
@@ -14,7 +15,7 @@ public class Gun
         }
         set
         {
-            _completion = Mathf.Clamp(value, 0, _maxCompletion);
+            _completion = value;          
         }
     }
     public int MaxCompletion
